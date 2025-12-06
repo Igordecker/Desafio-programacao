@@ -23,27 +23,69 @@ let notas = [
 
 //Entrada
 let alunos = ["João", "Maria", "Pedro", "Ana", "Carlos"];
-let notas = [
-    [],[],[],[],[]
-]
+let notas = [ [],[],[],[],[]]
+let medias = [];
+let desempenhos = [];
 //processsamento
 function validarNotas (nota){
-    while(nota < 0 || nota >10){
+    while(nota < 0 || nota >10 || isNaN(nota)){
      nota = Number(prompt(`Escolha a nota com um valor entre 0 e 10`));
-   return nota;
+   
 }
+return nota;
 }
 function adicionarNotas() {
-    for (let i = 0; i < alunos.length; i++) {
-        let notasAluno = [];
-        alert(`Adicionando notas para ${alunos[i]}:`);
-        for (let contador = 1; contador < 5; contador++) {
-            let nota = Number(prompt(`Digite a nota do ${contador}º bimestre para ${alunos[i]}:`));
-            nota = validarNota(nota);
-            notasAluno.push(nota);
+    for (let i = 0; i < alunos.length; i++){
+        let notasalunos = [];
+        for(let contador = 1; contador < 5; contador++){
+            let nota = Number(prompt(`Digite a nota ${contador} do aluno ${alunos[i]}`));
+        nota = validarNotas(nota);
+            notasalunos.push(nota)
         }
-        notas[i] = notasAluno;
+        notas[i] = notasalunos;
     }
 }
+function calcularmedia (notasdosalunos){
+    let soma = 0;
+    for(let contador = 0; contador < notasdosalunos.length; contador++){
+        soma = soma + notasdosalunos[contador];
+    }
+    let media = soma / notasdosalunos.length;
+    medias.push(media);
+}
+ function classificardesempenho (mediasdosalunos){
+    for(let i = 0; i < mediasdosalunos.length; i++){
+    let media = mediasdosalunos[i]
+         let desempenho = ``;
+    if(media >= 9){
+        desempenho = `Excelente`
+    }
+    else if(media >= 7){
+        desempenho = `Bom`
+    }
+     else if(media >= 5){
+        desempenho = `Regular`
+    }
+    else{
+        desempenho = `Insuficiente`
+    }
+    desempenhos.push(desempenho)
+ }
+    }
 
+   function gerarRelatorio (){
+    adicionarNotas();
+    for(let i = 0;i < alunos.length; i++){
+    calcularmedia(notas[i]);}
+    classificardesempenho(medias);
+    for(let i = 0;i < alunos.length; i++){
+    let media = medias[i]
+    let desempenho = desempenhos[i]
+        document.write(`Aluno: ${alunos[i]} <br>`)
+        document.write(`Notas: ${notas[i].join(` - `)} <br>`)
+        document.write(`Média: ${media}<br>`)
+        document.write(`Desempenho: ${desempenho}<br> <br>`)
+    }
+   }
+   gerarRelatorio()
 </script>
